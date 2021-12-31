@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { HttpStatus } from '@nestjs/common';
 import { ForbiddenException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create.dto';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
         private userRepository: Repository<User>,
     ) { }
 
-    async create(createUserDto): Promise<any> {
+    async create(createUserDto: CreateUserDto): Promise<any> {
         const isExist = await this.userRepository.findOne({ userId: createUserDto.userId });
         if (isExist) {
             throw new ForbiddenException({
